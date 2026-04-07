@@ -3,7 +3,7 @@ from tickets.models import Movie , Guest , Reservation
 
 
 # Movie Serializer
-class MovieSerializer(serializers.ModelSerializers):
+class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields = '__all__'
