@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http.response import JsonResponse
+from django.http import Http404
 from rest_framework import status
+from rest_framework.views import APIView
 from .models import Guest , Movie , Reservation
 from rest_framework.decorators import api_view
 from .serializers import GuestSerializer , MovieSerializer , ReservationSerializer
@@ -85,6 +87,59 @@ def FBV_pk(request , pk):
     elif request.method == 'DELETE':
         guest.delete()
         return Response(status = status.HTTP_204_NO_CONTENT)
+
+
+#4 Class Based Views
+#4.1 GET POST
+class CBV_List(APIView):
+
+    # GET
+    def get(self , request):
+        guests = Guest.objects.all()
+        serializer = GuestSerializer(guests , many=True)
+        return Response(serializer.data)
+    # POST
+    def post(self , request):
+        serializer = GuestSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data , status=status.HTTP_201_CREATED)
+        return Response(serializer.data , status=status.HTTP_400_BAD_REQUEST)
+    
+
+# 4.2 GET PUT DELETE
+class CBV_PK(APIView):
+
+    # query set
+    def get_object(self , pk):
+        try:
+            return Guest.objects.get(pk=pk)
+        except Guest.DoesNotExist:
+            raise Http404
+        
+
+    # GET
+    def get(self , request , pk):
+        guest = self.get_object(pk)
+        serializer = GuestSerializer(guest)
+        return Response(serializer.data)
+    
+    # PUT
+    def put(self , request , pk):
+        guest = self.get_object(pk)
+        serializer = GuestSerializer(guest ,data= request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data , status=status.HTTP_201_CREATED)
+        return Response(serializer.errors , status=status.HTTP_400_BAD_REQUEST)
+    
+
+    # Delete
+    def delete(self , request ,pk):
+        guest = self.get_object(pk)
+        guest.delete()
+        return Response(status= status.HTTP_204_NO_CONTENT)
+
 
     
 

@@ -19,6 +19,13 @@ urlpatterns = [
     path("rest/FBV_List/<int:pk>" , views.FBV_pk),
 
 
+    # 4.1 GET POST From Rest Framework Class Based View APIView
+    path("rest/CBV_List" , views.CBV_List.as_view()),
+
+
+    # 4.2 GET PUT DELETE From Rest Framework Class Based View APIView
+    path("rest/CBV_List/<int:pk>" , views.CBV_PK.as_view()),
+    
 
 
 ]
