@@ -5,7 +5,6 @@ from django.db import models
 class Movie(models.Model):
     hall = models.CharField(max_length=10)
     movie = models.CharField(max_length=10)
-    date = models.DateField()
 
 
 

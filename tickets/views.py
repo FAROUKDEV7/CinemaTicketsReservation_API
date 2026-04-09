@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http.response import JsonResponse
 from django.http import Http404
-from rest_framework import status , mixins , generics , viewsets
+from rest_framework import filters, status , mixins , generics , viewsets
 from rest_framework.views import APIView
 from .models import Guest , Movie , Reservation
 from rest_framework.decorators import api_view
@@ -188,3 +188,53 @@ class generic_pk(generics.RetrieveUpdateDestroyAPIView):
 class viewsets_guests(viewsets.ModelViewSet):
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['movie']
+
+
+class viewsets_movie(viewsets.ModelViewSet):
+    queryset = Movie.objects.all()
+    serializer_class = MovieSerializer
+
+class viewsets_reservation(viewsets.ModelViewSet):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
+
+
+
+
+#7 FVB find movie
+@api_view(['GET'])
+def findmovie(request):
+    movies = Movie.objects.filter(
+        hall = request.data["hall"],
+        movie = request.data["movie"]
+    )
+    serializer = MovieSerializer(movies , many =True)
+    return Response(serializer.data)
+
+
+# 8 crate new reservation
+@api_view(['POST'])
+def newreservation(request):
+
+    # movie
+    movie = Movie.objects.get(
+        hall = request.data["hall"],
+        movie = request.data["movie"]
+    )
+    # guest
+    guest = Guest()
+    guest.name = request.data['name']
+    guest.mobile = request.data['mobile']
+    guest.save()
+    # reservation
+    reservation = Reservation()
+    reservation.guest = guest
+    reservation.movie = movie
+    reservation.save()
+
+    return Response(status=status.HTTP_201_CREATED)
+
+
+

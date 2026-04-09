@@ -5,6 +5,8 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register('guests' , views.viewsets_guests)
+router.register('movies' , views.viewsets_movie)
+router.register('reservations' , views.viewsets_reservation)
 
 
 urlpatterns = [
@@ -50,5 +52,9 @@ urlpatterns = [
     # 7 viewsets
     path("rest/viewsets",include(router.urls)),
 
+    # find movie
+    path("fvb/findmovie" , views.findmovie),
 
+    # new reservation
+    path("fvb/newreservation" , views.newreservation),
 ]
