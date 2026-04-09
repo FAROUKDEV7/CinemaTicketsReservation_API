@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http.response import JsonResponse
 from django.http import Http404
-from rest_framework import status , mixins , generics
+from rest_framework import status , mixins , generics , viewsets
 from rest_framework.views import APIView
 from .models import Guest , Movie , Reservation
 from rest_framework.decorators import api_view
@@ -177,8 +177,14 @@ class mixins_pk(mixins.RetrieveModelMixin , mixins.UpdateModelMixin , mixins.Des
 class generic_list(generics.ListCreateAPIView):
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
-    
+
 # 6.2 GET PUT DELETE
 class generic_pk(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer
+
+
+# 7 viewsets
+class viewsets_guests(viewsets.ModelViewSet):
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer

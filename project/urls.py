@@ -1,6 +1,11 @@
 from django.contrib import admin
 from django.urls import path , include
 from tickets import views
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register('guests' , views.viewsets_guests)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -40,6 +45,10 @@ urlpatterns = [
 
     # 6.2 GET PUT DELETE From Rest Framework Class Based View generics
     path("rest/generic_list/<int:pk>" , views.generic_pk.as_view()),
+
+
+    # 7 viewsets
+    path("rest/viewsets",include(router.urls)),
 
 
 ]
