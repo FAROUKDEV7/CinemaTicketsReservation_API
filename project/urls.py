@@ -27,5 +27,19 @@ urlpatterns = [
     path("rest/CBV_List/<int:pk>" , views.CBV_PK.as_view()),
     
 
+    # 5.1 GET POST From Rest Framework Class Based View Mixins
+    path("rest/mixins_list" , views.mixins_list.as_view()),
+
+
+    # 5.2 GET PUT DELETE From Rest Framework Class Based View generics
+    path("rest/mixins_list/<int:pk>" , views.mixins_pk.as_view()),
+
+    # 6.1 GET POST From Rest Framework Class Based View Mixins
+    path("rest/generic_list" , views.generic_list.as_view()),
+
+
+    # 6.2 GET PUT DELETE From Rest Framework Class Based View generics
+    path("rest/generic_list/<int:pk>" , views.generic_pk.as_view()),
+
 
 ]

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http.response import JsonResponse
 from django.http import Http404
-from rest_framework import status
+from rest_framework import status , mixins , generics
 from rest_framework.views import APIView
 from .models import Guest , Movie , Reservation
 from rest_framework.decorators import api_view
@@ -143,3 +143,42 @@ class CBV_PK(APIView):
 
     
 
+# 5 mixins
+# 5.1 GET POST
+class mixins_list(mixins.ListModelMixin , mixins.CreateModelMixin , generics.GenericAPIView):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer
+
+    def get(self , request):
+        return self.list(request)
+    
+    def post(self , request):
+        return self.create(request)
+    
+
+# 5.2 GET PUT DELETE
+class mixins_pk(mixins.RetrieveModelMixin , mixins.UpdateModelMixin , mixins.DestroyModelMixin , generics.GenericAPIView):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer
+
+    def get(self , request , pk):
+        return self.retrieve(request)
+    
+    def put(self , request , pk):
+        return self.update(request)
+    
+    def delete(self , request , pk):
+        return self.destroy(request)
+    
+
+
+# 6 generics
+# 6.1 GET POST
+class generic_list(generics.ListCreateAPIView):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer
+    
+# 6.2 GET PUT DELETE
+class generic_pk(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer
