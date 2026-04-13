@@ -7,6 +7,8 @@ from .models import Guest , Movie , Reservation
 from rest_framework.decorators import api_view
 from .serializers import GuestSerializer , MovieSerializer , ReservationSerializer
 from rest_framework.response import Response
+from rest_framework.authentication import BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 
 #1 First Way (without rest and no model query) 
@@ -177,11 +179,15 @@ class mixins_pk(mixins.RetrieveModelMixin , mixins.UpdateModelMixin , mixins.Des
 class generic_list(generics.ListCreateAPIView):
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
+    authentication_classes= [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
 # 6.2 GET PUT DELETE
 class generic_pk(generics.RetrieveUpdateDestroyAPIView):
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
 
 # 7 viewsets
