@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # djago restframework
     "rest_framework",
+    "rest_framework.authtoken",
 
     # apps
     'tickets',
@@ -48,10 +49,14 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES':
+    ['rest_framework.authentication.TokenAuthentication'],
+
+    
     # 'DEFAULT_AUTHENTICATION_CLASSES':
     # ['rest_framework.authentication.BasicAuthentication'],
-    # 'DEFAULT_PERMISSION_CLASSES':
-    # ['rest_framework.permissions.IsAuthenticated']
+    'DEFAULT_PERMISSION_CLASSES':
+    ['rest_framework.permissions.IsAuthenticated']
 }
 
 MIDDLEWARE = [

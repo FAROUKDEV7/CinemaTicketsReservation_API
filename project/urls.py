@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path , include
 from tickets import views
 from rest_framework.routers import DefaultRouter
+from rest_framework.authtoken.views import obtain_auth_token
 
 router = DefaultRouter()
 router.register('guests' , views.viewsets_guests)
@@ -60,4 +61,7 @@ urlpatterns = [
 
     # rest api auth
     path("api-auth/", include("rest_framework.urls")),
+
+    # token auth
+    path("api-token-auth" , obtain_auth_token),
 ]
