@@ -57,4 +57,7 @@ urlpatterns = [
 
     # new reservation
     path("fvb/newreservation" , views.newreservation),
+
+    # rest api auth
+    path("api-auth/", include("rest_framework.urls")),
 ]
