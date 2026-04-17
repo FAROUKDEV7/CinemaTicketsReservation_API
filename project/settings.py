@@ -49,12 +49,21 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES':
-    ['rest_framework.authentication.TokenAuthentication'],
 
-    
+    # JWT
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+
+    # Token auth
+    # 'DEFAULT_AUTHENTICATION_CLASSES':
+    # ['rest_framework.authentication.TokenAuthentication'],
+
+    # Basic auth
     # 'DEFAULT_AUTHENTICATION_CLASSES':
     # ['rest_framework.authentication.BasicAuthentication'],
+
+    # permissions
     'DEFAULT_PERMISSION_CLASSES':
     ['rest_framework.permissions.IsAuthenticated']
 }
